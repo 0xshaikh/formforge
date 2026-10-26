@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Test (Node ${{ matrix.node-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        node-version: [22.x, 24.x]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: npm
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Run the API test suite
+        run: npm test
+
+      - name: Smoke test — boot the server and hit the API
+        run: |
+          FORMFORGE_DB=/tmp/formforge-ci.db PORT=3100 node server/index.js &
+          SERVER_PID=$!
+          sleep 2
+          curl -fsS http://127.0.0.1:3100/api/health
+          curl -fsS -X POST http://127.0.0.1:3100/api/forms \
+            -H 'Content-Type: application/json' \
+            -d '{"title":"CI smoke test","fields":[{"type":"text","label":"Name","required":true}]}'
+          kill $SERVER_PID

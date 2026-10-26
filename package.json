@@ -1,0 +1,30 @@
+{
+  "name": "formforge",
+  "version": "1.0.0",
+  "description": "Open-source Typeform Pro alternative — build beautiful one-question-at-a-time forms with branching logic, analytics and SQLite persistence.",
+  "main": "server/index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node --watch server/index.js",
+    "seed": "node server/seed.js",
+    "test": "node test/api.test.js"
+  },
+  "keywords": [
+    "form-builder",
+    "survey",
+    "typeform-alternative",
+    "forms",
+    "branching-logic",
+    "sqlite",
+    "open-source"
+  ],
+  "author": "0xshaikh",
+  "license": "MIT",
+  "engines": {
+    "node": ">=22.5.0"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

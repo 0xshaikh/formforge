@@ -1,0 +1,36 @@
+# Dependencies
+node_modules/
+
+# Local database (created on first run — never commit it)
+data/
+*.db
+*.db-journal
+*.sqlite
+
+# Test artifacts
+coverage/
+.nyc_output/
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Environment & secrets — never commit these
+.env
+.env.*
+*.pem
+*.key
+.secrets/
+
+# Editor / OS noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Scratch
+tmp/
+temp/
